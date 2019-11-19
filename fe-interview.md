@@ -29,3 +29,22 @@ location
 ```javascript
 
 ```
+
+5. 写一个方法检测页面中的所有标签是否正确闭合
+```javascript
+(function () {
+let dom_str = document.querySelector('body').outerHTML;
+let stack = [];
+for (let i in dom_str) {
+    const v = dom_str[i];
+    if (v === '<') {
+        stack.push(v);
+    } else if (v === '>') {
+        let peak = stack.pop();
+        if (peak !== '<') return false;
+    }
+}
+if (stack.length > 0) return false;
+return true;
+})();
+```
